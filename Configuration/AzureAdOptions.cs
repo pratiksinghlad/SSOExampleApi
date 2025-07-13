@@ -11,11 +11,6 @@ public class AzureAdOptions
     public string Instance { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the Azure AD domain (e.g., contoso.onmicrosoft.com).
-    /// </summary>
-    public string Domain { get; set; } = string.Empty;
-
-    /// <summary>
     /// Gets or sets the Azure AD tenant ID.
     /// </summary>
     public string TenantId { get; set; } = string.Empty;

@@ -1,5 +1,3 @@
-using SSOExampleApi;
-
 namespace SSOExampleApi;
 
 /// <summary>
@@ -19,12 +17,20 @@ public class Program
     /// <summary>
     /// Creates and configures the host builder for the application.
     /// </summary>
-    /// <param name="args">Command line arguments</param>
-    /// <returns>Configured IHostBuilder instance</returns>
+    /// <param name="args"></param>
+    /// <returns></returns>
     public static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
+            })
+            .ConfigureAppConfiguration((context, builder) =>
+            {
+                builder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                builder.AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json", true, true);
+                builder.AddJsonFile("secrets/appsettings.secrets.json", true, true);
+                builder.AddUserSecrets<Program>();
+                builder.AddEnvironmentVariables();
             });
 }
