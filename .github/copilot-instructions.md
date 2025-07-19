@@ -1,34 +1,43 @@
-# GitHub Copilot Custom Instructions for This Repository
 
-- All code must target .NET 9 and use C# 13 features and syntax[4][9].
-- Follow the official C# 13 coding conventions and best practices.
-- Use modern C# 13 features such as:
-  - `params` collections (supporting Span<T>, IEnumerable<T>, etc.)
-  - The new `lock` type and semantics
-  - The `\e` escape sequence for Unicode U+001B
-  - Method group natural type improvements
-  - Implicit indexer access in object initializers
-  - `ref` locals and `unsafe` contexts in iterators/async methods
-  - `ref struct` types implementing interfaces
-  - Partial properties and indexers in partial types[4][9]
-- All generated code must be idiomatic, clear, and maintainable.
-- Use XML documentation comments for all public types and members.
-- Prefer expressive variable and method names; avoid abbreviations.
-- Write unit tests for all new methods using xUnit.
-- Avoid obsolete patterns and APIs; use the latest .NET 9 libraries.
-- Ensure thread safety and proper use of async/await patterns.
-- Use dependency injection for services and data access.
-- All code should compile without warnings or errors.
-- Include comments where logic is non-trivial.
+# SSOExampleApi AI Coding Agent Instructions
 
-# Project Structure Guidelines
+## Big Picture Architecture
+- .NET 9 Web API for Azure AD SSO using OAuth2/OpenID Connect, supporting both personal (MSA) and organizational accounts.
+- Major components:
+  - `Controllers/`: API endpoints (`AuthController`, `UserController`, etc.)
+  - `Services/`: Business logic, split by domain, with interfaces in `Services/Interfaces/`
+  - `Configuration/`: Strongly-typed config models (e.g., `AzureAdOptions.cs`)
+  - `Models/`: DTOs for authentication, tokens, and user info
+  - `Startup.cs`/`Startup.Swagger.cs`: App and Swagger/OAuth2 configuration
+- Data flow: Auth requests go through Azure AD, tokens are validated, user info is extracted from claims, and APIs are protected by JWT Bearer authentication.
 
-- Organize code into folders by feature or domain.
-- Place interfaces in an `Interfaces` folder.
-- Place implementation classes in appropriate feature folders.
-- Place unit tests in a parallel `Tests` project.
+## Developer Workflows
+- **Build/Run:** Use `dotnet run` from the repo root or the "Run SSO Example API" VS Code task.
+- **Swagger UI:** Available at `https://localhost:5001`. OAuth2 login is integrated; click "Authorize" to sign in.
+- **Azure AD Setup:** See `AZURE_SETUP.md` for registration, redirect URIs, and scopes. Update `appsettings.json` with your Azure AD details.
+- **Configuration:** All secrets and keys are in `appsettings.json` and `appsettings.secrets.json`.
+- **Testing:** Unit tests should be placed in a parallel `Tests` project (not present by default).
 
-# Example Usage
+## Project-Specific Conventions
+- All code targets .NET 9 and C# 13; use latest language features.
+- Use dependency injection for all services; register in `Startup.cs`.
+- Organize by feature/domain, not by layer.
+- Interfaces go in `Services/Interfaces/`, implementations in feature folders.
+- Use XML doc comments for all public APIs.
+- Async methods must use `Task`/`Task<T>` and be suffixed with `Async`.
+- Swagger OAuth2 is configured for Implicit flow by default, but Authorization Code flow with PKCE is recommended for React/SPAs.
+  - See `Startup.Swagger.cs` for how OAuth2 endpoints are set.
+- JWT validation is strict; issuer/audience must match Azure AD config.
 
-- When generating a service, use constructor injection for dependencies.
-- When writing async methods, always use `Task` or `Task<T>` return types and include `Async` in method names.
+## Integration Points
+- **Azure AD:** All authentication flows use Azure AD endpoints. Personal accounts use the `consumers` tenant.
+- **Swagger UI:** Integrated OAuth2 login; endpoints are protected and require Bearer tokens.
+- **Microsoft Graph:** Scopes include `User.Read`, `openid`, `profile`, `email`.
+
+## Examples
+- To add a new service, create an interface in `Services/Interfaces/`, implement in `Services/`, and register in `Startup.cs`.
+- To add a new endpoint, create a controller in `Controllers/` and decorate with `[Authorize]` as needed.
+- To change OAuth2 flow, update `Startup.Swagger.cs` to use Authorization Code flow and PKCE.
+
+## Key Files
+- `Startup.cs`, `Startup.Swagger.cs`, `appsettings.json`, `Controllers/`, `Services/`, `Configuration/AzureAdOptions.cs`
