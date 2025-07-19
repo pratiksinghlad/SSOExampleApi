@@ -22,7 +22,11 @@ const processQueue = (error: any, token: string | null = null) => {
     if (error) {
       reject(error);
     } else {
-      resolve(token!);
+      if (token !== null) {
+        resolve(token);
+      } else {
+        reject(new Error('Token is null'));
+      }
     }
   });
   
