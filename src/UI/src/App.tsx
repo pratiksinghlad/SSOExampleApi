@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { MsalProvider } from '@azure/msal-react';
-import { authService } from './services/authService';
-import AuthGuard from './components/AuthGuard';
-import HomePage from './components/HomePage';
+import React, { useEffect } from "react";
+import { MsalProvider } from "@azure/msal-react";
+import { authService } from "./services/authService";
+import AuthGuard from "./components/AuthGuard";
+import HomePage from "./components/HomePage";
 
 const App: React.FC = () => {
   useEffect(() => {

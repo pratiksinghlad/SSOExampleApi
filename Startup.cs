@@ -35,13 +35,14 @@ public partial class Startup
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
-                options.Authority = "https://login.microsoftonline.com/consumers/v2.0";
+                var azInstance = Configuration["AzureAd:Instance"];
+                options.Authority = $"{azInstance}/consumers/v2.0";
                 options.Audience = Configuration["AzureAd:ClientId"];
                 
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = "https://login.microsoftonline.com/9188040d-6c67-4c5b-b112-36a304b66dad/v2.0",
+                    ValidIssuer =   $"{azInstance}/9188040d-6c67-4c5b-b112-36a304b66dad/v2.0",
                     ValidateAudience = true,
                     ValidAudiences = new[] 
                     { 
