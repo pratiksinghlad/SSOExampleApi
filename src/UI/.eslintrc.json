@@ -1,0 +1,41 @@
+{
+  "parser": "@typescript-eslint/parser", //Specifies ESLint parser
+  "extends": [
+    "plugin:react/recommended", //Uses the recommended rules from @eslint-plugin-react
+    "plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+    "plugin:react/jsx-runtime", // Allows skipping import of React when using JSX (uses new JSX Transform from React 17)
+    "plugin:prettier/recommended", // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESlint errors
+    "prettier" // place as last element to make prettier rules prevail over eslint (in case of conflict)
+  ],
+  "plugins": ["prettier", "@typescript-eslint"],
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "ecmaFeatures": {
+      "jsx": true //allows for the parsing of JSX
+    }
+  },
+  "rules": {
+    // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
+    // e.g. "@typescript-eslint/explicit-function-return-type": "off
+    "react/prop-types": "off",
+    "@typescript-eslint/ban-ts-comment": "off", // Allows the use of "ts-ignore"
+    "@typescript-eslint/no-shadow": "warn",
+    "prettier/prettier": ["warn", { "endOfLine": "auto" }],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "react/display-name": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "detect" // Tells eslint-plugin-react to automatically detect the version of React to use
+    }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.stories.*"],
+      "rules": {
+        "import/no-anonymous-default-export": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off"
+      }
+    }
+  ]
+}

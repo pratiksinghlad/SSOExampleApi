@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
 
 // Add global styles for spinner animation
 const globalStyles = `
@@ -24,16 +24,14 @@ const globalStyles = `
 `;
 
 // Inject global styles
-const styleSheet = document.createElement('style');
+const styleSheet = document.createElement("style");
 styleSheet.textContent = globalStyles;
 document.head.appendChild(styleSheet);
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
 root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>
+  </React.StrictMode>,
 );
