@@ -53,7 +53,6 @@ const HomePage: React.FC = () => {
         hasToken: true,
         lastRefresh: new Date().toLocaleTimeString(),
       }));
-      //tslint:disable-next-line
     } catch (err: unknown) {
       console.error("Failed to fetch user profile:", err);
 

@@ -32,8 +32,8 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
-# Visual Studio 2015/2017 cache/options directory
-.vs/
+# Ignore all .vs folders recursively
+**/.vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
 
@@ -283,9 +283,12 @@ FakesAssemblies/
 # GhostDoc plugin setting file
 *.GhostDoc.xml
 
-# Node.js Tools for Visual Studio
-.ntvs_analysis.dat
+# Ignore all node_modules folders recursively
 node_modules/
+src/node_modules/
+src/UI/node_modules/
+src/API/node_modules/
+src/*/node_modules/
 
 # Visual Studio 6 build log
 *.plg
