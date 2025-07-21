@@ -5,7 +5,6 @@ import { tokenStorageService } from "../services/tokenStorageService";
 interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
-  //tslint:disable-next-line
   user: UserProfile | null;
   error: string | null;
 }
